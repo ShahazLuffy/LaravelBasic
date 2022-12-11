@@ -99,6 +99,10 @@ class BrandController extends Controller
 
 
        public function deleteBrand($id){
+        $image = DB::table('brands')->where('id', $id)->first();
+        //$image = Brand::find($id);
+        $old_image = $image->brand_image;
+        unlink($old_image); //to delete actual image from directory~
 
         DB::table('brands')->where('id', $id)->delete();
          return redirect()->route('all.Brand')->with('deleted', 'Brand Deleted Successfully!');
