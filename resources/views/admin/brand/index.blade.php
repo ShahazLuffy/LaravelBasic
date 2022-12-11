@@ -13,9 +13,14 @@
       <div class="py-8">
         <div class="container" >
           <div class="row" >
-            <div class="col-md-11" >
+            <div class="col-md-15" >
               <div class="card"  >
                 <div class="card-header text-white" style="background-color: #d29de8;"> All Categeroy
+                    <div>
+                     @if(session('deleted'))
+                        <span class="text-danger">{{session('deleted')}}</span>
+                     @endif
+                    </div>
                   <table class="table table-striped table-dark" >
                          <thead>
                                   <tr>
@@ -52,7 +57,7 @@
                                     </td>
                                     <td>
                                       <a href=" {{ url('/brand/edit/'.$cat->id )}}" class="btn btn-info">edit</a>
-                                      <a href=" {{ url('/brand/delete/'.$cat->id)}}" class="btn btn-danger">delete</a>
+                                      <a href=" {{ url('/brand/delete/'.$cat->id)}}" onclick="return confirm('are you sure to delete this brand?')" class="btn btn-danger">delete</a>
                                     </td>
 
 

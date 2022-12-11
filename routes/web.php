@@ -33,8 +33,9 @@ Route::get('/dashboardquerybuilder',[DashboardQBController::class, 'dashboardVie
 //**************************************Brand***************************/
 Route::get('/brand/all', [BrandController::class, 'allBrand'])->name('all.Brand');
 Route::post('/brand/add', [BrandController::class, 'storeBrand'])->name('store.brand');
-Route::get('/brand/edit/{id}', [BrandController::class, 'edit'])->name('edit.brand');
-Route::get('/brand/delete/{id}', [BrandController::class, 'delete'])->name('delete.brand');
+Route::get('/brand/edit/{id}', [BrandController::class, 'editBrand'])->name('edit.brand');
+Route::post('/brand/update/{id}', [BrandController::class, 'updateBrand'])->name('update.brand');
+Route::get('/brand/delete/{id}', [BrandController::class, 'deleteBrand'])->name('delete.brand');
 
 
 //**************************************Category***************************/
@@ -50,3 +51,6 @@ Route::get('/pdelete/category/{id}', [CategoryController::class, 'pdelete'])->na
 
 //**************************************Contact***************************/
 Route::get('/contact', [ContactController::class, 'contactView'])->name('cont');
+
+
+
