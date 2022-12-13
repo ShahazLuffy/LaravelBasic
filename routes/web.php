@@ -7,6 +7,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Models\User;
 
+
+
+
+Route::get('/profile', function () {
+    // Only verified users may access this route...
+})->middleware(['auth', 'verified']);
 //**************************************Home***************************/
 
 Route::get('/', function () {
