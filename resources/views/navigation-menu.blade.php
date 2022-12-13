@@ -21,6 +21,9 @@
                      <x-jet-nav-link href="{{ route('all.Brand') }}" >
                         {{ __('Brand') }}
                     </x-jet-nav-link>
+                       <x-jet-nav-link href="{{ route('all.multipic') }}" >
+                        {{ __('Multi Pic') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 

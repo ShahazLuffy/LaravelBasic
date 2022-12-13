@@ -27,7 +27,7 @@ Route::middleware([
 });
 
 // dashboard with query  builder
-Route::get('/dashboardquerybuilder',[DashboardQBController::class, 'dashboardView'])->name('qb');
+Route::get('/dashboardqb',[DashboardQBController::class, 'dashboardView'])->name('qb');
 
 
 //**************************************Brand***************************/
@@ -53,4 +53,7 @@ Route::get('/pdelete/category/{id}', [CategoryController::class, 'pdelete'])->na
 Route::get('/contact', [ContactController::class, 'contactView'])->name('cont');
 
 
+//**************************************Multi Image***************************/
+Route::get('/multi/pic', [BrandController::class, 'multiPic'])->name('all.multipic');
+Route::post('/multi/add', [BrandController::class, 'sotreImg'])->name('store.image');
 

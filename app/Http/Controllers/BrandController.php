@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Multipic;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Illuminate\support\Carbon;
+use Image;
 
 class BrandController extends Controller
 {
@@ -39,15 +41,21 @@ class BrandController extends Controller
         $data['user_id'] = Auth::user()->id;
         $data['created_at'] = Carbon::now();
 
-        $brand_image = $request->file('brand_image');
-        $name_gen =hexdec(uniqid()); //to generate unique hex id for our image name
-        $img_ext = strtolower($brand_image->getClientOriginalExtension());
-        $img_name = $name_gen.'.'.$img_ext;
-        $up_location = 'image/brand/';
-        $last_img = $up_location.$img_name;
-        $brand_image->move($up_location, $img_name);
-        $data['brand_image'] = $last_img;
+        // $brand_image = $request->file('brand_image');
+        // $name_gen =hexdec(uniqid()); //to generate unique hex id for our image name
+        // $img_ext = strtolower($brand_image->getClientOriginalExtension());
+        // $img_name = $name_gen.'.'.$img_ext;
+        // $up_location = 'image/brand/';
+        // $last_img = $up_location.$img_name;
+        // $brand_image->move($up_location, $img_name);
+        // $data['brand_image'] = $last_img;
 
+        //another way is to use Image Intervention package
+        $brand_image = $request->file('brand_image');
+        $name_gen =hexdec(uniqid()).'.'.$brand_image->getClientOriginalExtension();
+        Image::make($brand_image)->resize(300,300)->save('image/brand/'.$name_gen);
+        $last_img = 'image/brand/'.$name_gen;
+        $data['brand_image'] = $last_img;
 
         DB::table('brands')->insert($data);
         return redirect()->back()->with('success', 'Brands Successfully Added!');
@@ -106,5 +114,39 @@ class BrandController extends Controller
 
         DB::table('brands')->where('id', $id)->delete();
          return redirect()->route('all.Brand')->with('deleted', 'Brand Deleted Successfully!');
+    }
+
+
+
+
+    public function multiPic(){
+
+        $multipic = Multipic::all();
+        return view('admin.multipic.index', compact('multipic'));
+    }
+
+      public function sotreImg(Request $request){
+
+        $validatedData = $request->validate([
+            "image" => 'required|unique:multipics|max:22',
+        ],
+        [
+            "image.required" => "please fill the filed",
+        ]
+        );
+        //for multi pic we need to use foreach loop
+        $image = $request->file('image');
+        foreach($image as $multiImg){
+            $name_gen =hexdec(uniqid()).'.'.$multiImg->getClientOriginalExtension();
+            Image::make($multiImg)->resize(300,300)->save('image/multi/'.$name_gen);
+            $last_img = 'image/multi/'.$name_gen;
+
+            Multipic::insert([
+                'image' => $last_img,
+                'created_at' => Carbon::now(),
+            ]);
+        }//end of foreach
+        //remember to add []index to name of the image filed attribute
+        return redirect()->back()->with('success', 'Multipic Successfully Added!');
     }
 }
