@@ -13,10 +13,12 @@ use App\Models\User;
 Route::get('/profile', function () {
     // Only verified users may access this route...
 })->middleware(['auth', 'verified']);
+
 //**************************************Home***************************/
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('home');
 })->name('home');
 
 
@@ -27,8 +29,9 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        $users = User::all();
-        return view('dashboard', compact('users'));
+        // $users = User::all();
+        // return view('dashboard', compact('users'));
+        return view('admin.index');
     })->name('dashboard');
 });
 
@@ -62,4 +65,9 @@ Route::get('/contact', [ContactController::class, 'contactView'])->name('cont');
 //**************************************Multi Image***************************/
 Route::get('/multi/pic', [BrandController::class, 'multiPic'])->name('all.multipic');
 Route::post('/multi/add', [BrandController::class, 'sotreImg'])->name('store.image');
+
+
+
+//*************************************user***************************/
+Route::get('/user/logout', [BrandController::class, 'logout'])->name('user.logout');
 

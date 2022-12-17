@@ -152,4 +152,11 @@ class BrandController extends Controller
         //remember to add []index to name of the image filed attribute
         return redirect()->back()->with('success', 'Multipic Successfully Added!');
     }
+
+      public function logout(){
+
+            Auth::logout();
+            return redirect()->route('login')->with('success', 'Successfully Logged out!');
+    }
+
 }
