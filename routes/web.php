@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardQBController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\HomeController;
 use App\Models\User;
 
 
@@ -18,7 +19,8 @@ Route::get('/profile', function () {
 
 Route::get('/', function () {
     // return view('welcome');
-    return view('home');
+    $brands = DB::table('brands')->get();
+    return view('home', compact('brands'));
 })->name('home');
 
 
